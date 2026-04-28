@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Military Service Financial Assistant</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+        }
+
+        header {
+            background: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            background: #444;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            background: #555;
+        }
+
+        /* ⭐ Neon Green Active Tab */
+        nav a.active {
+            background: #39ff14;
+            color: black;
+            box-shadow: 0 0 8px #39ff14;
+        }
+
+        .container {
+            padding: 40px;
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Post Military Service Financial Assistant</h1>
+</header>
+
+<nav>
+    <a id="tab-home" onclick="showTab('home')">Home</a>
+    <a id="tab-vaCalc" onclick="showTab('vaCalc')">VA Disability Calculator</a>
+    <a id="tab-retirement" onclick="showTab('retirement')">Military Retirement Calculator</a>
+    <a id="tab-benefits" onclick="showTab('benefits')">Benefits for Veterans by State</a>
+    <a id="tab-contact" onclick="showTab('contact')">Contact</a>
+</nav>
+
+<!-- HOME TAB -->
+<div id="home" class="container tab">
+    <h2>Welcome</h2>
+    <p>Here to help service members understand finances when transitioning to civilian life.</p>
+</div>
+
+<!-- VA DISABILITY CALCULATOR TAB -->
+<div id="vaCalc" class="container tab" style="display:none;">
+
+    <div style="
+        max-width:500px;
+        margin:20px auto;
+        padding:25px;
+        background:#f9fafb;
+        border-radius:12px;
+        box-shadow:0 4px 12px rgba(0,0,0,0.1);
+        font-family:Arial, sans-serif;
+    ">
+        <h2 style="text-align:center; margin-bottom:20px; color:#333;">
+            Disability Rating Calculator
+        </h2>
+
+        <div id="ratings"></div>
+
+        <button onclick="addRating()" style="
+            width:100%;
+            padding:12px;
+            background:#2563eb;
+            color:white;
+            border:none;
+            border-radius:8px;
+            font-size:16px;
+            cursor:pointer;
+            margin-top:10px;
+        ">
+            + Add Disability Rating
+        </button>
+
+        <div style="margin-top:25px; padding:15px; background:white; border-radius:10px; border:1px solid #ddd;">
+            <h3 style="margin:0 0 10px 0; color:#444;">Raw Score:</h3>
+            <div id="result" style="font-size:22px; font-weight:bold; color:#111;">—</div>
+
+            <h3 style="margin:20px 0 10px 0; color:#444;">VA Disability Rating:</h3>
+            <div id="rounded10" style="font-size:22px; font-weight:bold; color:#111;">—</div>
+        </div>
+    </div>
+
+</div>
+
+<!-- RETIREMENT TAB -->
+<div id="retirement" class="container tab" style="display:none;">
+    <h2>Military Retirement Calculator</h2>
+    <p>Coming soon...</p>
+</div>
+
+<!-- BENEFITS TAB -->
+<div id="benefits" class="container tab" style="display:none;">
+    <h2>Benefits for Veterans by State</h2>
+    <p>Coming soon...</p>
+</div>
+
+<!-- CONTACT TAB -->
+<div id="contact" class="container tab" style="display:none;">
+    <h2>Contact</h2>
+    <p>If you have questions, need help understanding your benefits, or want to request new tools for the site, you can reach out using the information below.</p>
+
+    <div style="
+        margin-top:20px;
+        padding:20px;
+        background:#f9fafb;
+        border-radius:10px;
+        border:1px solid #ddd;
+        max-width:500px;
+    ">
+        <h3 style="margin-top:0;">Email</h3>
+        <p style="font-weight:bold; color:#2563eb;">
+           Work: Chase.Chaney.2@us.af.mil 
+	</p>
+	<p style="font-weight:bold; color:#2563eb;">
+	Personal: Chasechaney10@gmail.com
+        </p>
+
+        <h3>DoD Teams</h3>
+        <p style="font-weight:bold; color:#2563eb;">
+            Chase P. Chaney, Electronics Mechanic 705MUNS/MXWMV
+        </p>
+	</p> Minot AFB, ND </p>
+
+        <p style="font-size:14px; color:#555;">
+            (These are not clickable for security and privacy.)
+        </p>
+    </div>
+</div>
+
+<footer>
+    © 2026 My Website — All rights reserved
+</footer>
+
+<script>
+/* ⭐ TAB SWITCHING WITH ACTIVE HIGHLIGHT + REMEMBER LAST TAB */
+function showTab(tabId) {
+    // Hide all tabs
+    document.querySelectorAll('.tab').forEach(tab => tab.style.display = 'none');
+    document.getElementById(tabId).style.display = 'block';
+
+    // Update active tab highlight
+    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+    document.getElementById("tab-" + tabId).classList.add('active');
+
+    // Save the selected tab
+    localStorage.setItem("activeTab", tabId);
+}
+
+// Load last opened tab on refresh
+window.onload = function () {
+    const savedTab = localStorage.getItem("activeTab") || "home";
+    showTab(savedTab);
+};
+
+/* ⭐ DISABILITY CALCULATOR */
+let count = 0;
+
+function addRating() {
+    count++;
+
+    const wrapper = document.createElement("div");
+    wrapper.id = "wrapper" + count;
+    wrapper.style = `
+        background:white;
+        padding:12px;
+        border-radius:8px;
+        border:1px solid #ddd;
+        margin-bottom:12px;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:15px;
+    `;
+
+    const leftSide = document.createElement("div");
+    leftSide.style = "flex:1;";
+
+    const label = document.createElement("label");
+    label.textContent = `Disability Rating ${count} (%)`;
+    label.style = "display:block; font-weight:bold; margin-bottom:5px; color:#333;";
+
+    const input = document.createElement("input");
+    input.type = "number";
+    input.id = "rating" + count;
+    input.style = `
+        width:100%;
+        padding:8px;
+        border-radius:6px;
+        border:1px solid #ccc;
+        font-size:14px;
+    `;
+    input.oninput = calculateFormula;
+
+    leftSide.appendChild(label);
+    leftSide.appendChild(input);
+
+    const removeBtn = document.createElement("button");
+    removeBtn.innerHTML = "&times;";
+    removeBtn.style = `
+        width:34px;
+        height:34px;
+        border-radius:50%;
+        border:none;
+        background:#dc2626;
+        color:white;
+        font-size:22px;
+        line-height:0;
+        cursor:pointer;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        margin-left:10px;
+        flex-shrink:0;
+    `;
+    removeBtn.onmouseover = () => removeBtn.style.background = "#b91c1c";
+    removeBtn.onmouseout = () => removeBtn.style.background = "#dc2626";
+
+    removeBtn.onclick = function () {
+        wrapper.remove();
+        calculateFormula();
+    };
+
+    wrapper.appendChild(leftSide);
+    wrapper.appendChild(removeBtn);
+
+    document.getElementById("ratings").appendChild(wrapper);
+}
+
+function calculateFormula() {
+    let values = [];
+
+    const inputs = document.querySelectorAll("#ratings input");
+    inputs.forEach(input => {
+        if (input.value !== "") {
+            values.push(parseFloat(input.value));
+        }
+    });
+
+    if (values.length === 0) {
+        document.getElementById("result").innerText = "—";
+        document.getElementById("rounded10").innerText = "—";
+        return;
+    }
+
+    let product = 1;
+    values.forEach(v => {
+        product *= (1 - v / 100);
+    });
+
+    let excelValue = (1 - product) * 100;
+    let rawScore = Math.round(excelValue);
+    let rounded10 = Math.round(rawScore / 10) * 10;
+
+    document.getElementById("result").innerText = rawScore;
+    document.getElementById("rounded10").innerText = rounded10;
+}
+</script>
+
+</body>
+</html>
